@@ -1,4 +1,4 @@
-﻿namespace RatioMaster_source
+namespace RatioMaster_source
 {
     using System;
     using System.ComponentModel;
@@ -1622,10 +1622,42 @@
                     }
                 }
 
-                string cmd = "GET " + path + " " + currentClient.HttpProtocol + "\r\n" + currentClient.Headers.Replace("{host}", host) + "\r\n";
+                string headers = currentClient.Headers.Replace("{host}", host);
+                string lowerCaseHeaders = headers.ToLower();
+                if (!lowerCaseHeaders.Contains("connection: close"))
+                {
+                    headers = headers.TrimEnd('\r', '\n') + "\r\nConnection: close\r\n";
+                }
+                else if (!headers.EndsWith("\r\n"))
+                {
+                    headers += "\r\n";
+                }
+
+                string cmd = "GET " + path + " " + currentClient.HttpProtocol + "\r\n" + headers + "\r\n";
+                cmd = cmd.TrimEnd('\r', '\n') + "\r\n\r\n";
+
                 AddLogLine("======== Sending Command to Tracker ========");
                 AddLogLine(cmd);
-                sock.Send(_usedEnc.GetBytes(cmd));
+
+                Stream streamToUse;
+                NetworkStreamEx ns = new NetworkStreamEx(sock, false);
+                if (reqUri.Scheme.ToLower() == "https")
+                {
+                    System.Net.Security.SslStream sslStream = new System.Net.Security.SslStream(
+                        ns,
+                        false,
+                        delegate { return true; }
+                    );
+                    sslStream.AuthenticateAsClient(host, new System.Security.Cryptography.X509Certificates.X509CertificateCollection(), System.Security.Authentication.SslProtocols.None, false);
+                    streamToUse = sslStream;
+                }
+                else
+                {
+                    streamToUse = ns;
+                }
+
+                byte[] cmdBytes = _usedEnc.GetBytes(cmd);
+                streamToUse.Write(cmdBytes, 0, cmdBytes.Length);
 
                 // simple reading loop
                 // read while have the data
@@ -1635,11 +1667,12 @@
                     MemoryStream memStream = new MemoryStream();
                     while (true)
                     {
-                        int dataLen = sock.Receive(data);
+                        int dataLen = streamToUse.Read(data, 0, data.Length);
                         if (0 == dataLen)
                             break;
                         memStream.Write(data, 0, dataLen);
                     }
+                    streamToUse.Dispose();
 
                     if (memStream.Length == 0)
                     {
