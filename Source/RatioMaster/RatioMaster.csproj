@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net10.0-windows</TargetFramework>
     <OutputType>WinExe</OutputType>
@@ -31,10 +31,16 @@
     <CodeAnalysisRuleSet>..\Rules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Update="PanelBase.cs">
+    <Compile Include="PanelBase.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Update="RM.cs" />
+    <Compile Include="RM.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="RM.Designer.cs">
+      <DependentUpon>RM.cs</DependentUpon>
+    </Compile>
+    <Compile Include="VersionChecker.cs" />
   </ItemGroup>
   <ItemGroup>
     <BaseApplicationManifest Include="Properties\app.manifest" />

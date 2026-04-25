@@ -753,23 +753,6 @@ namespace RatioMaster_source
             this.cmbClient.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cmbClient.FormattingEnabled = true;
             this.cmbClient.IntegralHeight = false;
-            this.cmbClient.Items.AddRange(new object[] {
-            "uTorrent",
-            "BitComet",
-            "Azureus",
-            "Vuze",
-            "BitTorrent",
-			"Transmission",
-            "ABC",
-            "BitLord",
-            "BTuga",
-            "BitTornado",
-            "Burst",
-            "BitTyrant",
-            "BitSpirit",
-            "Deluge",
-            "KTorrent",
-            "Gnome BT"});
             this.cmbClient.Location = new System.Drawing.Point(197, 20);
             this.cmbClient.Name = "cmbClient";
             this.cmbClient.Size = new System.Drawing.Size(139, 21);

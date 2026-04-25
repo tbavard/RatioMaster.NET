@@ -102,6 +102,13 @@ namespace RatioMaster_source
 
         internal void deployDefaultValues()
         {
+            // Populate client families from JSON config
+            cmbClient.Items.Clear();
+            foreach (var family in TorrentClientFactory.GetClientFamilies())
+            {
+                cmbClient.Items.Add(family.Name);
+            }
+
             TorrentInfo torrent = new TorrentInfo(0, 0);
             trackerAddress.Text = torrent.tracker;
             shaHash.Text = torrent.hash;
@@ -170,7 +177,7 @@ namespace RatioMaster_source
 
                         if (!MainForm._24h_format_enabled)
                             dateString = "[" + String.Format("{0:hh:mm:ss}", dtNow) + "]";
-                        else 
+                        else
                             dateString = "[" + String.Format("{0:HH:mm:ss}", dtNow) + "]";
 
                         logWindow.AppendText(dateString + " " + logLine + "\r\n");
@@ -372,170 +379,32 @@ namespace RatioMaster_source
         internal void cmbClient_SelectedIndexChanged(object sender, EventArgs e)
         {
             cmbVersion.Items.Clear();
-            switch (cmbClient.SelectedItem.ToString())
+            string selectedClient = cmbClient.SelectedItem.ToString();
+            var families = TorrentClientFactory.GetClientFamilies();
+            ClientFamily family = null;
+            foreach (var f in families)
             {
-                case "BitComet":
-                    {
-                        cmbVersion.Items.Add("1.20");
-                        cmbVersion.Items.Add("1.03");
-                        cmbVersion.Items.Add("0.98");
-                        cmbVersion.Items.Add("0.96");
-                        cmbVersion.Items.Add("0.93");
-                        cmbVersion.Items.Add("0.92");
-                        cmbVersion.SelectedItem = "1.20";
-                        if (customPeersNum.Text == "0" || customPeersNum.Text == "") customPeersNum.Text = "200";
-                        break;
-                    }
-
-                case "Vuze":
-                    {
-                        cmbVersion.Items.Add("4.2.0.8");
-                        cmbVersion.SelectedItem = "4.2.0.8";
-                        if (customPeersNum.Text == "0" || customPeersNum.Text == "") customPeersNum.Text = "50";
-                        break;
-                    }
-
-                case "Azureus":
-                    {
-                        cmbVersion.Items.Add("3.1.1.0");
-                        cmbVersion.Items.Add("3.0.5.0");
-                        cmbVersion.Items.Add("3.0.4.2");
-                        cmbVersion.Items.Add("3.0.3.4");
-                        cmbVersion.Items.Add("3.0.2.2");
-                        cmbVersion.Items.Add("2.5.0.4");
-                        cmbVersion.SelectedItem = "3.1.1.0";
-                        if (customPeersNum.Text == "0" || customPeersNum.Text == "") customPeersNum.Text = "50";
-                        break;
-                    }
-
-                case "uTorrent":
-                    {
-                        cmbVersion.Items.Add("3.3.2");
-                        cmbVersion.Items.Add("3.3.0");
-                        cmbVersion.Items.Add("3.2.0");
-                        cmbVersion.Items.Add("2.0.1 (build 19078)");
-                        cmbVersion.Items.Add("1.8.5 (build 17414)");
-                        cmbVersion.Items.Add("1.8.1-beta(11903)");
-                        cmbVersion.Items.Add("1.8.0");
-                        cmbVersion.Items.Add("1.7.7");
-                        cmbVersion.Items.Add("1.7.6");
-                        cmbVersion.Items.Add("1.7.5");
-                        cmbVersion.Items.Add("1.6.1");
-                        cmbVersion.Items.Add("1.6");
-                        cmbVersion.SelectedItem = "3.3.2";
-                        if (customPeersNum.Text == "0" || customPeersNum.Text == "") customPeersNum.Text = "200";
-                        break;
-                    }
-
-                case "BitTorrent":
-                    {
-                        cmbVersion.Items.Add("6.0.3 (8642)");
-                        cmbVersion.SelectedItem = "6.0.3 (8642)";
-                        if (customPeersNum.Text == "0" || customPeersNum.Text == "") customPeersNum.Text = "200";
-                        break;
-                    }
-
-		case "Transmission":
-		    {
-			cmbVersion.Items.Add("2.82 (14160)");
-			cmbVersion.Items.Add("2.92 (14714)");
-			cmbVersion.SelectedItem = "2.92 (14714)";
-			if (customPeersNum.Text == "0" || customPeersNum.Text == "") customPeersNum.Text = "200";
-                        break;
-		    }
-
-                case "BitLord":
-                    {
-                        cmbVersion.Items.Add("1.1");
-                        cmbVersion.SelectedItem = "1.1";
-                        if (customPeersNum.Text == "0" || customPeersNum.Text == "") customPeersNum.Text = "200";
-                        break;
-                    }
-
-                case "ABC":
-                    {
-                        cmbVersion.Items.Add("3.1");
-                        cmbVersion.SelectedItem = "3.1";
-                        if (customPeersNum.Text == "0" || customPeersNum.Text == "") customPeersNum.Text = "200";
-                        break;
-                    }
-
-                case "BTuga":
-                    {
-                        cmbVersion.Items.Add("2.1.8");
-                        cmbVersion.SelectedItem = "2.1.8";
-                        if (customPeersNum.Text == "0" || customPeersNum.Text == "") customPeersNum.Text = "200";
-                        break;
-                    }
-
-                case "BitTornado":
-                    {
-                        cmbVersion.Items.Add("0.3.17");
-                        cmbVersion.SelectedItem = "0.3.17";
-                        if (customPeersNum.Text == "0" || customPeersNum.Text == "") customPeersNum.Text = "200";
-                        break;
-                    }
-
-                case "Burst":
-                    {
-                        cmbVersion.Items.Add("3.1.0b");
-                        cmbVersion.SelectedItem = "3.1.0b";
-                        if (customPeersNum.Text == "0" || customPeersNum.Text == "") customPeersNum.Text = "200";
-                        break;
-                    }
-
-                case "BitTyrant":
-                    {
-                        cmbVersion.Items.Add("1.1");
-                        cmbVersion.SelectedItem = "1.1";
-                        if (customPeersNum.Text == "0" || customPeersNum.Text == "") customPeersNum.Text = "50";
-                        break;
-                    }
-
-                case "BitSpirit":
-                    {
-                        cmbVersion.Items.Add("3.6.0.200");
-                        cmbVersion.Items.Add("3.1.0.077");
-                        cmbVersion.SelectedItem = "3.6.0.200";
-                        if (customPeersNum.Text == "0" || customPeersNum.Text == "") customPeersNum.Text = "200";
-                        break;
-                    }
-
-                case "Deluge":
-                    {
-                        cmbVersion.Items.Add("1.2.0");
-                        cmbVersion.Items.Add("0.5.8.7");
-                        cmbVersion.Items.Add("0.5.8.6");
-                        cmbVersion.SelectedItem = "1.2.0";
-                        if (customPeersNum.Text == "0" || customPeersNum.Text == "") customPeersNum.Text = "200";
-                        break;
-                    }
-
-                case "KTorrent":
-                    {
-                        cmbVersion.Items.Add("2.2.1");
-                        cmbVersion.SelectedItem = "2.2.1";
-                        if (customPeersNum.Text == "0" || customPeersNum.Text == "") customPeersNum.Text = "100";
-                        break;
-                    }
-
-                case "Gnome BT":
-                    {
-                        cmbVersion.Items.Add("0.0.28-1");
-                        cmbVersion.SelectedItem = "0.0.28-1";
-                        if (customPeersNum.Text == "0" || customPeersNum.Text == "") customPeersNum.Text = "200";
-                        break;
-                    }
-
-                default:
-                    {
-                        cmbClient.SelectedItem = DefaultClient;
-                        if (customPeersNum.Text == "0" || customPeersNum.Text == "") customPeersNum.Text = "200";
-                        break;
-                    }
+                if (f.Name == selectedClient)
+                {
+                    family = f;
+                    break;
+                }
             }
 
-            // getCurrentClient(GetClientName());
+            if (family == null)
+            {
+                cmbClient.SelectedItem = DefaultClient;
+                return;
+            }
+
+            foreach (var version in family.Versions)
+            {
+                cmbVersion.Items.Add(version);
+            }
+
+            cmbVersion.SelectedIndex = 0;
+            if (customPeersNum.Text == "0" || customPeersNum.Text == "")
+                customPeersNum.Text = family.DefNumWant.ToString();
         }
 
         private void cmbVersion_SelectedValueChanged(object sender, EventArgs e)
@@ -827,7 +696,7 @@ namespace RatioMaster_source
 
         internal void btnDefault_Click(object sender, EventArgs e)
         {
-            getnew = false;                
+            getnew = false;
             cmbClient.SelectedItem = DefaultClient;
             cmbVersion.SelectedItem = DefaultClientVersion;
 
@@ -1134,7 +1003,7 @@ namespace RatioMaster_source
                                 AddLogLine("incomplete: " + BEncode.String(dictionary2["incomplete"]));
                                 updateScrapStats(BEncode.String(dictionary2["complete"]), BEncode.String(dictionary2["incomplete"]), BEncode.String(dictionary2["downloaded"]));
                                 decimal leechers = BEncode.String(dictionary2["incomplete"]).ParseValidInt(-1);
-                                if (Leechers != -1  && (leechers == 0))
+                                if (Leechers != -1 && (leechers == 0))
                                 {
                                     AddLogLine("Min number of leechers reached... setting upload speed to 0");
                                     updateTextBox(uploadRate, "0");
@@ -1279,7 +1148,7 @@ namespace RatioMaster_source
                 Seeders = int.Parse(seedStr);
                 Leechers = int.Parse(leechStr);
             }
-            catch(Exception)
+            catch (Exception)
             {
                 Seeders = -1;
                 Leechers = -1;
@@ -1292,11 +1161,11 @@ namespace RatioMaster_source
             // }
             // else
             // {
-                seedLabel.Text = "Seeders: " + seedStr;
-                leechLabel.Text = "Leechers: " + leechStr;
-                scrapStatsUpdated = true;
+            seedLabel.Text = "Seeders: " + seedStr;
+            leechLabel.Text = "Leechers: " + leechStr;
+            scrapStatsUpdated = true;
 
-                // AddLogLine("Scrap Stats Updated" + "\n" + "\n");
+            // AddLogLine("Scrap Stats Updated" + "\n" + "\n");
             // }
         }
 
@@ -2038,7 +1907,7 @@ namespace RatioMaster_source
                     return false;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 AddLogLine("Error when parsing: " + ex.Message);
                 return false;
