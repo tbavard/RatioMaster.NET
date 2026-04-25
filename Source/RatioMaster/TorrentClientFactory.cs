@@ -1,24 +1,18 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Web.Script.Serialization;
-
 namespace RatioMaster_source
 {
-    public class ClientFamily
-    {
-        public string Name { get; set; }
-        public List<string> Versions { get; set; }
-        public int DefNumWant { get; set; }
-    }
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Text.Json;
 
     public static class TorrentClientFactory
     {
+        private const string DefaultClientName = "uTorrent 3.3.2";
+
         private static readonly RandomStringGenerator stringGenerator = new RandomStringGenerator();
         private static readonly Dictionary<string, TorrentClientConfig> clientConfigs;
         private static readonly List<ClientFamily> clientFamilies;
-        private const string DefaultClientName = "uTorrent 3.3.2";
         private static readonly string ConfigFilePath = Path.Combine(
             AppDomain.CurrentDomain.BaseDirectory, "clients.json");
 
@@ -35,7 +29,7 @@ namespace RatioMaster_source
             foreach (var config in configs)
             {
                 string family = config.Family ?? config.Name;
-                string version = config.Version ?? "";
+                string version = config.Version ?? string.Empty;
 
                 ClientFamily cf;
                 if (!familyDict.TryGetValue(family, out cf))
@@ -53,17 +47,6 @@ namespace RatioMaster_source
         public static List<ClientFamily> GetClientFamilies()
         {
             return clientFamilies;
-        }
-
-        private static List<TorrentClientConfig> LoadConfigs()
-        {
-            if (!File.Exists(ConfigFilePath))
-                throw new FileNotFoundException(
-                    "Client configuration file not found: " + ConfigFilePath);
-
-            string json = File.ReadAllText(ConfigFilePath);
-            var serializer = new JavaScriptSerializer();
-            return serializer.Deserialize<List<TorrentClientConfig>>(json);
         }
 
         public static TorrentClient GetClient(string name)
@@ -89,6 +72,48 @@ namespace RatioMaster_source
             client.StartOffset = config.StartOffset;
             client.MaxOffset = config.MaxOffset;
             return client;
+        }
+
+        private static List<TorrentClientConfig> LoadConfigs()
+        {
+            try
+            {
+                if (File.Exists(ConfigFilePath))
+                {
+                    string json = File.ReadAllText(ConfigFilePath);
+                    var configs = JsonSerializer.Deserialize<List<TorrentClientConfig>>(json);
+                    if (configs is { Count: > 0 })
+                    {
+                        return configs;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                // Fall through to default config
+            }
+
+            return new List<TorrentClientConfig>
+            {
+                new TorrentClientConfig
+                {
+                    Name = DefaultClientName,
+                    Family = "uTorrent",
+                    Version = "3.3.2",
+                    HttpProtocol = "HTTP/1.1",
+                    HashUpperCase = true,
+                    KeyTemplate = "$alphanumeric:8:false:true",
+                    PeerIDTemplate = "-UT3320-$alphanumeric:12:false:false",
+                    Headers = "User-Agent: uTorrent/3320(30000)\r\nAccept-Encoding: gzip",
+                    Query = "info_hash={infohash}&peer_id={peerid}&port={port}&uploaded={uploaded}&downloaded={downloaded}&left={left}&corrupt=0&key={key}&event={event}&numwant={numwant}&compact=1&no_peer_id=1",
+                    DefNumWant = 200,
+                    Parse = true,
+                    SearchString = string.Empty,
+                    ProcessName = "uTorrent",
+                    StartOffset = 0,
+                    MaxOffset = 0,
+                }
+            };
         }
 
         private static string ResolveTemplate(string template)
