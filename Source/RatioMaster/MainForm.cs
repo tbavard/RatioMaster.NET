@@ -1,13 +1,13 @@
-using System;
-using System.Drawing;
-using System.Windows.Forms;
-using System.Diagnostics;
-using System.Xml;
-using Microsoft.Win32;
-using System.IO;
-
 namespace RatioMaster_source
 {
+    using System;
+    using System.Diagnostics;
+    using System.Drawing;
+    using System.IO;
+    using System.Windows.Forms;
+    using System.Xml;
+    using Microsoft.Win32;
+
     public partial class MainForm : Form
     {
         public static bool _24h_format_enabled = false;

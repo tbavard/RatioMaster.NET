@@ -1,0 +1,108 @@
+root = true
+
+[*.cs]
+
+# Disable all StyleCop analyzer rules - the codebase doesn't follow StyleCop conventions
+dotnet_diagnostic.SA0001.severity = none
+dotnet_diagnostic.SA1000.severity = none
+dotnet_diagnostic.SA1001.severity = none
+dotnet_diagnostic.SA1002.severity = none
+dotnet_diagnostic.SA1003.severity = none
+dotnet_diagnostic.SA1004.severity = none
+dotnet_diagnostic.SA1005.severity = none
+dotnet_diagnostic.SA1006.severity = none
+dotnet_diagnostic.SA1007.severity = none
+dotnet_diagnostic.SA1008.severity = none
+dotnet_diagnostic.SA1009.severity = none
+dotnet_diagnostic.SA1010.severity = none
+dotnet_diagnostic.SA1011.severity = none
+dotnet_diagnostic.SA1012.severity = none
+dotnet_diagnostic.SA1013.severity = none
+dotnet_diagnostic.SA1024.severity = none
+dotnet_diagnostic.SA1025.severity = none
+dotnet_diagnostic.SA1028.severity = none
+dotnet_diagnostic.SA1100.severity = none
+dotnet_diagnostic.SA1101.severity = none
+dotnet_diagnostic.SA1106.severity = none
+dotnet_diagnostic.SA1107.severity = none
+dotnet_diagnostic.SA1108.severity = none
+dotnet_diagnostic.SA1111.severity = none
+dotnet_diagnostic.SA1117.severity = none
+dotnet_diagnostic.SA1119.severity = none
+dotnet_diagnostic.SA1120.severity = none
+dotnet_diagnostic.SA1121.severity = none
+dotnet_diagnostic.SA1122.severity = none
+dotnet_diagnostic.SA1124.severity = none
+dotnet_diagnostic.SA1128.severity = none
+dotnet_diagnostic.SA1129.severity = none
+dotnet_diagnostic.SA1130.severity = none
+dotnet_diagnostic.SA1131.severity = none
+dotnet_diagnostic.SA1133.severity = none
+dotnet_diagnostic.SA1200.severity = none
+dotnet_diagnostic.SA1201.severity = none
+dotnet_diagnostic.SA1202.severity = none
+dotnet_diagnostic.SA1204.severity = none
+dotnet_diagnostic.SA1206.severity = none
+dotnet_diagnostic.SA1210.severity = none
+dotnet_diagnostic.SA1214.severity = none
+dotnet_diagnostic.SA1300.severity = none
+dotnet_diagnostic.SA1305.severity = none
+dotnet_diagnostic.SA1306.severity = none
+dotnet_diagnostic.SA1307.severity = none
+dotnet_diagnostic.SA1308.severity = none
+dotnet_diagnostic.SA1309.severity = none
+dotnet_diagnostic.SA1310.severity = none
+dotnet_diagnostic.SA1311.severity = none
+dotnet_diagnostic.SA1312.severity = none
+dotnet_diagnostic.SA1313.severity = none
+dotnet_diagnostic.SA1400.severity = none
+dotnet_diagnostic.SA1401.severity = none
+dotnet_diagnostic.SA1402.severity = none
+dotnet_diagnostic.SA1407.severity = none
+dotnet_diagnostic.SA1412.severity = none
+dotnet_diagnostic.SA1500.severity = none
+dotnet_diagnostic.SA1501.severity = none
+dotnet_diagnostic.SA1502.severity = none
+dotnet_diagnostic.SA1503.severity = none
+dotnet_diagnostic.SA1504.severity = none
+dotnet_diagnostic.SA1505.severity = none
+dotnet_diagnostic.SA1507.severity = none
+dotnet_diagnostic.SA1512.severity = none
+dotnet_diagnostic.SA1513.severity = none
+dotnet_diagnostic.SA1515.severity = none
+dotnet_diagnostic.SA1516.severity = none
+dotnet_diagnostic.SA1519.severity = none
+dotnet_diagnostic.SA1520.severity = none
+dotnet_diagnostic.SA1633.severity = none
+dotnet_diagnostic.SA1649.severity = none
+dotnet_diagnostic.SA1652.severity = none
+
+# CA1416 - Platform compatibility (this is a Windows-only WinForms app)
+dotnet_diagnostic.CA1416.severity = none
+
+# CA1001 - Types that own disposable fields should be disposable
+dotnet_diagnostic.CA1001.severity = none
+
+# CA1033 - Interface methods should be callable by child types
+dotnet_diagnostic.CA1033.severity = none
+
+# CA1060 - Move P/Invokes to NativeMethods class
+dotnet_diagnostic.CA1060.severity = none
+
+# CA1063 - Implement IDisposable correctly
+dotnet_diagnostic.CA1063.severity = none
+
+# CA2002 - Do not lock on objects with weak identity
+dotnet_diagnostic.CA2002.severity = none
+
+# CA2022 - Avoid inexact read with Stream.Read
+dotnet_diagnostic.CA2022.severity = none
+
+# CA2200 - Rethrow to preserve stack details
+dotnet_diagnostic.CA2200.severity = none
+
+# CA2213 - Disposable fields should be disposed
+dotnet_diagnostic.CA2213.severity = none
+
+# SYSLIB0014 - WebRequest is obsolete
+dotnet_diagnostic.SYSLIB0014.severity = none
