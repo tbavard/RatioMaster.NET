@@ -569,15 +569,7 @@ namespace BytesRoad.Net.Sockets
             _asyncCtx.SetProgress(true);
             try
             {
-                int read = 0;
-                int num = 1;
-                while((num > 0) && (read < size))
-                {
-                    num = _socket.Receive(buffer, offset + read, size - read);
-                    read += num;
-                }
-
-                return read;
+                return _socket.Receive(buffer, offset, size);
             }
             catch
             {

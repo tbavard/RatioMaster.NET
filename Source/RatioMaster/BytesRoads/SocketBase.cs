@@ -50,7 +50,8 @@ namespace BytesRoad.Net.Sockets
 
         protected SocketBase()
         {
-            _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            _socket = new Socket(AddressFamily.InterNetworkV6, SocketType.Stream, ProtocolType.Tcp);
+            _socket.DualMode = true;
             _socket.SetSocketOption(SocketOptionLevel.Tcp, SocketOptionName.NoDelay, 1);
         }
 
@@ -64,7 +65,8 @@ namespace BytesRoad.Net.Sockets
             _proxyPort = proxyPort;
             _proxyUser = proxyUser;
             _proxyPassword = proxyPassword;
-            _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            _socket = new Socket(AddressFamily.InterNetworkV6, SocketType.Stream, ProtocolType.Tcp);
+            _socket.DualMode = true;
         }
 
         protected SocketBase(Socket systemSocket)
@@ -162,13 +164,20 @@ namespace BytesRoad.Net.Sockets
                 throw new ArgumentException("Provided host structure do not contains addresses.", "host");
             }
 
+            // Prefer IPv4, but fall back to IPv6
             foreach (var addr in host.AddressList)
             {
                 if (addr.AddressFamily == AddressFamily.InterNetwork)
                     return new IPEndPoint(addr, port);
             }
-            
-            return new IPEndPoint(IPAddress.Parse("127.0.0.1"), port);
+
+            foreach (var addr in host.AddressList)
+            {
+                if (addr.AddressFamily == AddressFamily.InterNetworkV6)
+                    return new IPEndPoint(addr, port);
+            }
+
+            return new IPEndPoint(host.AddressList[0], port);
         }
 
         protected void CheckDisposed()

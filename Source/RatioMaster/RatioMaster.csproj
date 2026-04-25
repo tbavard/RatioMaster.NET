@@ -34,9 +34,7 @@
     <Compile Update="PanelBase.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Update="RM.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Update="RM.cs" />
   </ItemGroup>
   <ItemGroup>
     <BaseApplicationManifest Include="Properties\app.manifest" />
