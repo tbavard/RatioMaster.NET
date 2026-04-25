@@ -2,13 +2,13 @@ namespace RatioMaster_source
 {
     using System.Collections;
 
-    internal class RMCollection<item> : CollectionBase
+    internal class RMCollection<TItem> : CollectionBase
     {
-        internal item this[int index]
+        internal TItem this[int index]
         {
             get
             {
-                return (item)this.List[index];
+                return (TItem)this.List[index];
             }
 
             set
@@ -17,7 +17,7 @@ namespace RatioMaster_source
             }
         }
 
-        internal int Add(item value)
+        internal int Add(TItem value)
         {
             return this.List.Add(value);
         }

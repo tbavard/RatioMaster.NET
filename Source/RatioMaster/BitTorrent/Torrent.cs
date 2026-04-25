@@ -156,10 +156,10 @@ namespace BitTorrent
                 r = new BinaryReader(fs);
 
                 // Parse the BEncode .torrent file
-                data = (ValueDictionary)BEncode.Parse(r.BaseStream);
+                this.data = (ValueDictionary)BEncode.Parse(r.BaseStream);
 
                 // Check the torrent for its form, initialize this object
-                LoadTorrent();
+                this.LoadTorrent();
 
                 hasOpened = true;
                 r.Close();
@@ -171,13 +171,20 @@ namespace BitTorrent
             }
             finally
             {
-                if (r != null) r.Close();
-                if (fs != null) fs.Close();
+                if (r != null)
+                {
+                    r.Close();
+                }
+
+                if (fs != null)
+                {
+                    fs.Close();
+                }
             }
 
             return hasOpened;
         }
-        
+
         private void ParsePieceHashes(byte[] hashdata)
         {
             int targetPieces = hashdata.Length / 20;
@@ -199,7 +206,7 @@ namespace BitTorrent
                 return pieceArray.Length;
             }
         }
-        
+
         private void LoadTorrent()
         {
             if (data.Contains("announce") == false) throw new IncompleteTorrentData("No tracker URL");
