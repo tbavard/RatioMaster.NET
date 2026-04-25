@@ -226,7 +226,8 @@ namespace BytesRoad.Net.Sockets
             cmd[2] = (byte)((ip.Port & 0xFF00) >> 8);
             cmd[3] = (byte)(ip.Port & 0xFF);
 
-            long ipAddr = ip.Address.Address;
+            byte[] addrBytes = ip.Address.GetAddressBytes();
+            long ipAddr = BitConverter.ToInt32(addrBytes, 0);
             cmd[7] = (byte)((ipAddr & 0xFF000000) >> 24);
             cmd[6] = (byte)((ipAddr & 0x00FF0000) >> 16);
             cmd[5] = (byte)((ipAddr & 0x0000FF00) >> 8);

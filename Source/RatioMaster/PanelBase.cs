@@ -154,6 +154,7 @@ namespace RatioMaster_source
         }
 
         [Description("Style of panel's bevel"), Category("Appearance")]
+        [System.ComponentModel.DesignerSerializationVisibility(System.ComponentModel.DesignerSerializationVisibility.Visible)]
         public BevelStyles BevelStyle
         {
             get
@@ -173,6 +174,7 @@ namespace RatioMaster_source
         }
 
         [Category("Layout"), Description("Control size in the expanded state")]
+        [System.ComponentModel.DesignerSerializationVisibility(System.ComponentModel.DesignerSerializationVisibility.Visible)]
         public Size ExpandSize
         {
             get

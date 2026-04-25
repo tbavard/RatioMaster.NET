@@ -81,7 +81,7 @@ namespace BitTorrent
         {
             get
             {
-                SHA1 sha = new SHA1CryptoServiceProvider();
+                SHA1 sha = SHA1.Create();
                 return sha.ComputeHash((data["info"]).Encode());
             }
         }
