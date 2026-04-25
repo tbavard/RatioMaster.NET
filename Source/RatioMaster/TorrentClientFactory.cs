@@ -1,17 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Web.Script.Serialization;
-
 namespace RatioMaster_source
 {
-    public class ClientFamily
-    {
-        public string Name { get; set; }
-        public List<string> Versions { get; set; }
-        public int DefNumWant { get; set; }
-    }
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Text.Json;
 
     public static class TorrentClientFactory
     {
@@ -58,12 +51,13 @@ namespace RatioMaster_source
         private static List<TorrentClientConfig> LoadConfigs()
         {
             if (!File.Exists(ConfigFilePath))
+            {
                 throw new FileNotFoundException(
                     "Client configuration file not found: " + ConfigFilePath);
+            }
 
             string json = File.ReadAllText(ConfigFilePath);
-            var serializer = new JavaScriptSerializer();
-            return serializer.Deserialize<List<TorrentClientConfig>>(json);
+            return JsonSerializer.Deserialize<List<TorrentClientConfig>>(json);
         }
 
         public static TorrentClient GetClient(string name)

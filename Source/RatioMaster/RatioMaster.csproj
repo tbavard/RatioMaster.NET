@@ -31,16 +31,15 @@
     <CodeAnalysisRuleSet>..\Rules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="PanelBase.cs">
+    <Compile Update="PanelBase.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="RM.cs">
+    <Compile Update="RM.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="RM.Designer.cs">
+    <Compile Update="RM.Designer.cs">
       <DependentUpon>RM.cs</DependentUpon>
     </Compile>
-    <Compile Include="VersionChecker.cs" />
   </ItemGroup>
   <ItemGroup>
     <BaseApplicationManifest Include="Properties\app.manifest" />
@@ -76,5 +75,10 @@
     <PackageReference Include="StyleCop.Analyzers" Version="1.0.0" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0" />
     <PackageReference Include="System.Text.Encoding.CodePages" Version="8.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="clients.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>
