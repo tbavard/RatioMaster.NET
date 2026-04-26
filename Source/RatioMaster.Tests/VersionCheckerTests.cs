@@ -15,7 +15,7 @@
             var versionChecker = new VersionChecker(string.Empty);
             var serverVersion = versionChecker.GetServerVersionId();
             Console.WriteLine(serverVersion);
-            Assert.AreEqual(4, serverVersion.Length);
+            Assert.That(serverVersion.Length, Is.EqualTo(4));
         }
     }
 }
